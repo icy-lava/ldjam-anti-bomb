@@ -11,13 +11,15 @@ end
 local function process(self, e, dt)
 	local bump = self.world.bump
 	local expectX, expectY = e.x + e.vx * dt, e.y + e.vy * dt
-	local bouncy = not not e.restitution
+	local bouncy = e.getRestitution and e:getRestitution() > 0
 	local actualX, actualY, cols, len = bump:move(e, expectX, expectY, bouncy and bounceFilter or normalFilter)
 	if bouncy then
 		for i = 1, len do
 			local c = cols[i]
 			if c.type == 'bounce' then
-				e.vx, e.vy = e.vx * -math.abs(c.normal.x) * e.restitution, e.vy * -math.abs(c.normal.y) * e.restitution
+				local nx, ny = util.sign(c.normal.x), util.sign(c.normal.y)
+				if nx ~= 0 then e.vx = e.vx * -math.abs(nx) * e.restitution end
+				if ny ~= 0 then e.vy = e.vy * -math.abs(ny) * e.restitution end
 			end
 		end
 	else

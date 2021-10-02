@@ -9,11 +9,12 @@ local function process(self, e, dt)
 	-- end
 	ix = ix * e.speedMax
 	local still = ix == 0
+	local control = util.clamp(e.control, 0, 1)
 	if still then
-		e.vx = util.damp(e.vx, 0, e.onGround and 0.001 or 0.3, dt)
+		e.vx = util.damp(e.vx, 0, util.lerp(e.control ^ 2, 0.99, e.onGround and 0.001 or 0.3), dt)
 	else
 		if lume.sign(ix) ~= lume.sign(e.vx) or math.abs(ix) > math.abs(e.vx) then
-			e.vx = util.damp(e.vx, ix, 0.0005, dt)
+			e.vx = util.damp(e.vx, ix, util.lerp(e.control ^ 2, 0.99, 0.0005), dt)
 		end
 	end
 	if e.onGround and iy < 0 then

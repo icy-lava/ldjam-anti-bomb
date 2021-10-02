@@ -1,8 +1,17 @@
 local lg = require 'love.graphics'
-local filter = tiny.requireAll('x', 'y', 'w', 'h')
+local filter = tiny.requireAll('draw')
+
+local function preProcess(self, dt)
+	self.world.camera:attach()
+end
 
 local function process(self, e, dt)
-	lg.rectangle('line', e.x, e.y, e.w, e.h)
+	-- lg.rectangle('line', e.x, e.y, e.w, e.h)
+	e:draw()
+end
+
+local function postProcess(self, dt)
+	self.world.camera:detach()
 end
 
 return function()
@@ -10,7 +19,9 @@ return function()
 	
 	system.draw = true
 	system.filter = filter
+	system.preProcess = preProcess
 	system.process = process
+	system.postProcess = postProcess
 	
 	return system
 end

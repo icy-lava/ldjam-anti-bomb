@@ -6,6 +6,7 @@ end
 local libs = {
 	util = true,
 	lume = true,
+	flux = true,
 	-- log = true,
 	-- lurker = true,
 	inspect = true,

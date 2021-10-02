@@ -13,14 +13,16 @@ function game:enter()
 	world:add(require 'entity.block' (-256, 128, 512, 32))
 	world:add(require 'entity.block' (256, -128, 32, 256 + 32))
 	-- world:add(require 'entity.bomb' (0, 0))
-	world.camera = camera.new(0, 0)
+	world.camera = camera.new(0, 20)
+	world.camera.scale = 1.8
 	
-	world:add(require 'system.bump'())
+	util.addSystem(world, 'bump')
+	util.addSystem(world, 'tween')
 	world:add(require 'system.on_ground'())
 	world:add(require 'system.recover'())
 	world:add(require 'system.input'())
-	world:add(require 'system.gravity'())
-	world:add(require 'system.physics'())
+	util.addSystem(world, 'gravity')
+	util.addSystem(world, 'physics')
 	world:add(require 'system.bomb'())
 	
 	world:add(require 'system.draw'())
@@ -36,18 +38,17 @@ function game:draw()
 	self.world:update(lt.getDelta(), function(w, s) return s.draw end)
 end
 
+function game:mousepressed(mx, my, button)
+	if button == 1 then
+		self.world.player:throwBombPrepare()
+		return
+	end
+end
+
 function game:mousereleased(mx, my, button)
 	if button == 1 then
-		mx, my = util.getCamera(self):worldCoords(mx, my)
-		local p = util.getPlayer(self)
-		local px, py = util.getBombOrigin(self)
-		local nx, ny = vector.normalize(vector.sub(mx, my, px, py))
-		
-		local speed = 500
-		local b = require 'entity.bomb':new(px, py)
-		b.vx, b.vy = nx * speed, ny * speed
-		
-		self.world:addEntity(b)
+		self.world.player:throwBomb(util.getCamera(self):worldCoords(mx, my))
+		return
 	end
 end
 

@@ -1,0 +1,39 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Normal mode",
+			"type": "shell",
+			"command": "make",
+			"windows": {
+				"command": "wsl",
+				"args": [ "make" ],
+			},
+			"group": "test",
+		},
+		{
+			"label": "Debug mode",
+			"type": "shell",
+			"command": "make",
+			"args": [ "PROGRAM_ARGS=--debug --color" ],
+			"windows": {
+				"command": "wsl",
+				"args": [ "make", "PROGRAM_ARGS=--debug --color" ],
+			},
+			"group": {"kind":"test", "isDefault":true}
+		},
+		{
+			"label": "Build All",
+			"type": "shell",
+			"command": "make",
+			"args": [ "build_all" ],
+			"windows": {
+				"command": "wsl",
+				"args": [ "make", "build_all"],
+			},
+			"group": {"kind":"build", "isDefault":true}
+		}
+	]
+}

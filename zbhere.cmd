@@ -1,0 +1,1 @@
+@start zbstudio "%~dp0/" %*

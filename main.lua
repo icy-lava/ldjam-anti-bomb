@@ -19,4 +19,9 @@ function love.keypressed(key)
 			return
 		end
 	end
+	if (key == 'return' and lk.isDown('lalt', 'ralt')) or
+		(key == 'f' and lk.isDown('lctrl', 'rctrl')) or key == 'f11' then
+		love.window.setFullscreen(not love.window.getFullscreen())
+		return
+	end
 end

@@ -3,7 +3,8 @@ local super = player.super
 
 player.static.WIDTH = 64
 player.static.HEIGHT = 96
-player.static.DEFAULT_ARM_POSITION = 0.5
+player.static.DEFAULT_ARM_POSITION = 0.75
+player.static.BOMB_SIMULATION_DT = 1 / 60
 
 function player:initialize(x, y)
 	local w, h = player.WIDTH, player.HEIGHT
@@ -43,11 +44,24 @@ function player:draw()
 				local lj = lg.getLineJoin()
 				lg.setLineJoin('none')
 				lg.setLineStyle 'rough'
-				lg.line(points)
-				local r = lg.getLineWidth() / 2
-				for i = 0, #points / 2 - 1 do
-					lg.circle('fill', points[i * 2 + 1], points[i * 2 + 2], r, math.ceil(r * util.tau))
+				-- lg.line(points)
+				local r, g, b = lg.getColor()
+				local pointCount = #points / 2
+				
+				if pointCount > 1 then
+					local x1, y1 = points[1], points[2]
+					for i = 1, pointCount - 1 do
+						local x2, y2 = points[i * 2 + 1], points[i * 2 + 2], points[i * 2 + 3], points[i * 2 + 4]
+						lg.setColor(r, g, b, 1 - i / (pointCount - 1))
+						lg.line(x1, y1, x2, y2)
+						x1, y1 = x2, y2
+					end
 				end
+				lg.setColor(r, g, b, 1)
+				-- local r = lg.getLineWidth() / 2
+				-- for i = 0, #points / 2 - 1 do
+				-- 	lg.circle('fill', points[i * 2 + 1], points[i * 2 + 2], r, math.ceil(r * util.tau))
+				-- end
 				lg.setLineJoin(lj)
 			end
 		end
@@ -79,7 +93,7 @@ function player:getBombTrajectory()
 	local b = bomb:new(util.getBombOrigin())
 	b.vx, b.vy = self:getAimVelocity()
 	local points = {b:getCenter()}
-	local dt = 0.01
+	local dt = player.BOMB_SIMULATION_DT
 	local simulationSteps = math.ceil((b.timeMax - self:getBombCompletion() * b.timeMax) / dt)
 	
 	-- Disgusting hack

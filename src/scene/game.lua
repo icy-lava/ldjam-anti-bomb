@@ -14,18 +14,19 @@ function game:enter()
 	world:add(require 'entity.block' (256, -128, 32, 256 + 32))
 	-- world:add(require 'entity.bomb' (0, 0))
 	world.camera = camera.new(0, 20)
-	world.camera.scale = 1.8
+	-- world.camera.scale = 1.0
 	
 	util.addSystem(world, 'bump')
 	util.addSystem(world, 'tween')
-	world:add(require 'system.on_ground'())
-	world:add(require 'system.recover'())
-	world:add(require 'system.input'())
+	util.addSystem(world, 'on_ground')
+	util.addSystem(world, 'recover')
+	util.addSystem(world, 'input')
 	util.addSystem(world, 'gravity')
 	util.addSystem(world, 'physics')
-	world:add(require 'system.bomb'())
+	util.addSystem(world, 'bomb')
+	util.addSystem(world, 'camera')
 	
-	world:add(require 'system.draw'())
+	util.addSystem(world, 'draw')
 	
 	world:refresh()
 end

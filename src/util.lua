@@ -74,17 +74,17 @@ local lg = require 'love.graphics'
 local bomb = require 'entity.bomb'
 function util.drawBomb(x, y, time)
 	local lw = lg.getLineWidth()
-	lg.setLineWidth(2)
+	lg.setLineWidth(4)
 	
 	local r = vector.len(bomb.WIDTH / 2, bomb.HEIGHT / 2)
 	lg.push()
 	lg.translate(x, y)
 	lg.circle('line', 0, 0, r, r * math.pi * 2)
 	
-	local dashCount = 8
-	lg.setLineWidth(2)
+	local dashCount = 10
+	lg.setLineWidth(4)
 	for i = 0, math.ceil(dashCount * (1 - time)) - 1 do
-		local angle = i / dashCount * util.tau
+		local angle = i / dashCount * util.tau - math.pi / 2
 		local nx, ny = math.cos(angle), math.sin(angle)
 		lg.line(nx * r / 2.5, ny * r / 2.5, nx * r * 3 / 4, ny * r * 3 / 4)
 	end

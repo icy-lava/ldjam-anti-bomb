@@ -15,7 +15,7 @@ function player:initialize(x, y)
 		left = {'left', 'a'},
 		right = {'right', 'd'},
 	}
-	self.speedMax = 500
+	self.speedMax = 400
 	self.onGround = false
 	self.control = 1
 	self.restitution = 0.8
@@ -44,6 +44,7 @@ function player:draw()
 				local lj = lg.getLineJoin()
 				lg.setLineJoin('none')
 				lg.setLineStyle 'rough'
+				lg.setLineWidth(4)
 				-- lg.line(points)
 				local r, g, b = lg.getColor()
 				local pointCount = #points / 2

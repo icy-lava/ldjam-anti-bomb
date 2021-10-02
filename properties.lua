@@ -1,7 +1,14 @@
-local properties = {
+local vivid = require 'vivid'
+properties = {
 	window = {
 		referenceDimension = 720,
 		defaultAspectRatio = '16:9'
+	},
+	palette = {
+		background = {vivid.LCHtoRGB(90, 20, 300)},
+		outline = {vivid.LCHtoRGB(12, 50, 60)},
+		backgroundExplosion = {vivid.LCHtoRGB(0, 0, 0)},
+		outlineExplosion = {1, 0, 0},
 	}
 }
 
@@ -14,5 +21,3 @@ else
 	properties.window.virtualWidth  = properties.window.referenceDimension * aspectW / aspectH
 	properties.window.virtualHeight = properties.window.referenceDimension
 end
-
-return properties

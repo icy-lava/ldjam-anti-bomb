@@ -82,8 +82,14 @@ do
 end
 
 cli.color = (cli.color == nil) and (not windows) or cli.color
-
 cli.fullscreen = cli.fullscreen or not cli.debug and cli.fullscreen == nil
+
+if cli.debug then
+	luaReload = require("lua_reload")
+	luaReload.Inject()
+end
+
+require 'properties'
 
 local virtualW, virtualH = properties.window.virtualWidth, properties.window.virtualHeight
 cli.height = cli.height or math.floor(cli.width and (cli.width * virtualH / virtualW) or virtualH)

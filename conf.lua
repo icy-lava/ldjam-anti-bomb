@@ -1,7 +1,7 @@
 require 'path'
 
-local propertiesFileName = 'properties.lua'
-properties = loadstring(require 'love.filesystem'.read(propertiesFileName), '@' .. propertiesFileName)()
+-- local propertiesFileName = 'properties.lua'
+-- properties = loadstring(require 'love.filesystem'.read(propertiesFileName), '@' .. propertiesFileName)()
 
 require 'cli'
 log = require 'log'

@@ -5,8 +5,14 @@ local function process(self, e, dt)
 	e.time = e.time + dt
 	if e.time >= e.timeMax then
 		local w = self.world
-		w:remove(e)
+		w:removeEntity(e)
+		
 		local bx, by = e:getCenter()
+		local exp = require 'entity.explosion':new(bx, by, 350)
+		w:addEntity(exp)
+		util.getTweener():to(exp, 0.09, {}):oncomplete(function()
+			w:removeEntity(exp)
+		end):ease('quartout')
 		local items, len = w.bump:getItems()
 		for j = 1, len do
 			local i = items[j]

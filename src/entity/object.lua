@@ -7,7 +7,16 @@ end
 
 function object:draw()
 	local lw = lg.getLineWidth()
-	lg.setLineWidth(2)
+	lg.setLineWidth(4)
+	lg.setColor(properties.palette.outline)
+	lg.rectangle('line', self.x, self.y, self.w, self.h, 3)
+	lg.setLineWidth(lw)
+end
+
+function object:drawExploded()
+	local lw = lg.getLineWidth()
+	lg.setLineWidth(4)
+	lg.setColor(properties.palette.outlineExplosion)
 	lg.rectangle('line', self.x, self.y, self.w, self.h, 3)
 	lg.setLineWidth(lw)
 end

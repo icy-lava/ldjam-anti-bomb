@@ -27,8 +27,11 @@ function game:enter()
 	util.addSystem(world, 'camera')
 	
 	util.addSystem(world, 'draw')
+	util.addSystem(world, 'draw_explosion_stencil')
+	util.addSystem(world, 'draw_explosion')
 	
 	world:refresh()
+	lg.setBackgroundColor(properties.palette.background)
 end
 
 function game:update(dt)
@@ -36,6 +39,7 @@ function game:update(dt)
 end
 
 function game:draw()
+	lg.setBackgroundColor(properties.palette.background)
 	self.world:update(lt.getDelta(), function(w, s) return s.draw end)
 end
 

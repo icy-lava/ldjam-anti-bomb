@@ -21,7 +21,7 @@ local function update(self, dt)
 	local mx, my = lm.getPosition()
 	mx, my = mx - w / 2, my - h / 2
 	local zoomFactor = util.clamp(vector.len(mx, my) / (mindim / 2), 0, 1)
-	zoomFactor = util.remap(zoomFactor, 0, 1, 1.5, 0.9)
+	zoomFactor = util.remap(zoomFactor, 0, 1, 1.1, 0.9)
 	camera.zoomFactor = util.damp(camera.zoomFactor or 1, zoomFactor, 0.5, dt)
 	camera.scale = mindim / properties.window.referenceDimension * camera.zoomFactor
 end

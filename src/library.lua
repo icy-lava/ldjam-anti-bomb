@@ -21,10 +21,6 @@ local libs = {
 }
 
 return setmetatable(libs, {__call = function()
-	if cli.debug then
-		luaReload = require("lua_reload")
-		luaReload.Inject()
-	end
 	for k,v in pairs(libs) do
 		if v then
 			if type(v) ~= 'string' then v = k end

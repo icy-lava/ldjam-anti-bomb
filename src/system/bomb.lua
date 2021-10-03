@@ -6,6 +6,8 @@ local function process(self, e, dt)
 	if e.time >= e.timeMax then
 		local w = self.world
 		w:removeEntity(e)
+		-- print(e.sound)
+		if e.sound then e.sound:stop() end
 		
 		local bx, by = e:getCenter()
 		local exp = require 'entity.explosion':new(bx, by, 350)
@@ -30,6 +32,11 @@ local function process(self, e, dt)
 				end
 			end
 		end
+		asset.audio.explode:setPitch(2 ^ ((love.math.random() * 2 - 1) * 0.1))
+		asset.audio.explode:stop()
+		asset.audio.explode:play()
+		asset.audio.feedback:stop()
+		asset.audio.feedback:play()
 	end
 end
 

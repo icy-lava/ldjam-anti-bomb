@@ -8,6 +8,7 @@ local libs = {
 	lume = true,
 	flux = true,
 	json = true,
+	cargo = true,
 	-- log = true,
 	-- lurker = true,
 	inspect = true,

@@ -6,6 +6,7 @@ globals = {
 	'luaReload',
 	'properties',
 	'log',
+	'asset',
 	'scene',
 }
 

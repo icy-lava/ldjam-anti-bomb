@@ -29,6 +29,14 @@ function util.clamp(x, min, max)
 	return x
 end
 
+function util.index(t, ...)
+	for i = 1, select('#', ...) do
+		if type(t) ~= 'table' then return nil end
+		t = t[select(i, ...)]
+	end
+	return t
+end
+
 -- End Math(y)
 
 function util.bumpFilter(s, e)
@@ -126,6 +134,12 @@ function util.addSystem(world, systemName, ...)
 	world[label] = require('system.' .. systemName)(...)
 	world:addSystem(world[label])
 	return world[label]
+end
+
+function util.playSound(sound)
+	if type(sound) == 'string' then sound = asset.audio[sound] end
+	sound:stop()
+	sound:play()
 end
 
 return util

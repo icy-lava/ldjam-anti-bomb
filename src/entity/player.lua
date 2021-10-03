@@ -105,6 +105,7 @@ local bomb = require 'entity.bomb'
 function player:getBombTrajectory()
 	local world = util.getWorld()
 	local b = bomb:new(util.getBombOrigin())
+	b.sim = true
 	b.vx, b.vy = self:getAimVelocity()
 	local points = {b:getCenter()}
 	local dt = player.BOMB_SIMULATION_DT
@@ -139,10 +140,23 @@ end
 
 function player:throwBombPrepare()
 	if self.bombState == 'ready' then
+		do -- clock sound
+			local sound = asset.audio.clock:clone()
+			self.sound = sound
+			sound:setVolume(0)
+			sound:play()
+			local v = {value = 0}
+			util.getTweener():to(v, 0.3, {value = properties.audio.volume.clock}):ease('quadout'):onupdate(function()
+				sound:setVolume(v.value)
+			end)
+		end
+		
 		self.bombState = 'prepared'
 		util.getTweener():to(self, 0.2, {armPosition = 1.5}):ease('quadinout')
 		self.bombTimer = {value = 0}
 		self.bombTimerTween = util.getTweener():to(self.bombTimer, bomb.TIME_MAX, {value = 1}):ease('linear'):oncomplete(function()
+			self.sound:stop()
+			self.sound = nil
 			local b = bomb:new(self:getBombPosition())
 			b.time = b.timeMax
 			util.getWorld():addEntity(b)
@@ -152,6 +166,11 @@ function player:throwBombPrepare()
 				self.armPosition = player.DEFAULT_ARM_POSITION
 				self.bombState = 'ready'
 			end)
+		end)
+		local pitch = 2 ^ ((love.math.random() * 2 - 1) * 0.05)
+		util.getTweener():to({}, bomb.TIME_MAX - asset.audio.buildup:getDuration() / pitch, {}):oncomplete(function()
+			asset.audio.buildup:setPitch(pitch)
+			util.playSound(asset.audio.buildup)
 		end)
 	end
 end
@@ -169,6 +188,9 @@ function player:throwBomb(mx, my)
 			local b = require 'entity.bomb':new(util.getBombOrigin())
 			b.vx, b.vy = self:getAimVelocity()
 			b.time = self:getBombCompletion() * b.timeMax
+			
+			b.sound = self.sound
+			self.sound = nil
 			
 			local points = self:getBombTrajectory()
 			local indicator = require 'entity.indicator':new(points)

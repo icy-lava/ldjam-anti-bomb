@@ -10,6 +10,11 @@ local function process(self, e, dt)
 	local actualX, actualY, cols, len = bump:check(e, e.x, ty, isGroundFilter)
 	local nog = actualY ~= ty
 	if nog ~= e.onGround then
+		if nog then
+			local s = asset.audio['land' .. love.math.random(1, 3)]
+			s:setPitch(2 ^ ((love.math.random() * 2 - 1) * 0.1))
+			util.playSound(s)
+		end
 		e.onGround = nog
 	end
 end

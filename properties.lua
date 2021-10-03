@@ -12,6 +12,21 @@ properties = {
 		bomb = {vivid.LCHtoRGB(40, 90, 0, 1)},
 		backgroundExplosion = {vivid.LCHtoRGB(0, 0, 0, 1)},
 		outlineExplosion = {1, 0, 0, 1},
+	},
+	audio = {
+		volume = {
+			explode = 0.4,
+			feedback = 0.05,
+			land1 = 0.05,
+			land2 = 0.05,
+			land3 = 0.05,
+			clock = 0.08,
+			buildup = 0.05,
+			bomb_bounce = 0.2,
+		},
+		looping = {
+			clock = true
+		}
 	}
 }
 

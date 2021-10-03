@@ -2,6 +2,17 @@ require 'library' ()
 
 function love.load()
 	if luaReload then luaReload.SetPrintReloadingLogs(false) end
+	asset = cargo.init {
+		dir = 'asset',
+		processors = {
+			['audio/'] = function(sound, filename)
+				local name = assert(filename:match('[^/]+$')):gsub('%.[^%.]+$', '')
+				local v = util.index(properties, 'audio', 'volume', name)
+				if v then sound:setVolume(v) end
+				if util.index(properties, 'audio', 'looping', name) then sound:setLooping(true) end
+			end
+		}
+	}
 	scene = roomy.new()
 	scene:hook()
 	scene:enter(require 'scene.game':new())

@@ -41,6 +41,7 @@ function game:enter()
 	
 	world:refresh()
 	lg.setBackgroundColor(properties.palette.background)
+	asset.audio()
 end
 
 function game:update(dt)

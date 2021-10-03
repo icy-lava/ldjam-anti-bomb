@@ -26,8 +26,36 @@ end
 local lm = require 'love.mouse'
 local lg = require 'love.graphics'
 function player:draw()
-	super.draw(self)
-	do
+	-- super.draw(self)
+	lg.setColor(properties.palette.outline)
+	
+	do -- Body
+		local w, h = player.WIDTH - 16, player.HEIGHT - 50
+		local x, y = self:getCenter()
+		lg.setLineWidth(4)
+		lg.rectangle('line', x - w / 2, self.y + player.HEIGHT - h, w, h, 2)
+	end
+	
+	do -- Head
+		local w, h = player.WIDTH, 44
+		local x, y = self:getCenter()
+		lg.setLineWidth(4)
+		lg.rectangle('line', x - w / 2, self.y, w, h, 2)
+		do -- Eyes
+			local eyeRelationalHeight = 0.3
+			local eyeR = 6
+			local mx, my = util.getCamera():worldCoords(lm.getPosition())
+			local dx, dy = vector.sub(mx, my, x, self.y + h * eyeRelationalHeight)
+			local dlen = vector.len(dx, dy)
+			local offset = math.sqrt(util.clamp(util.remap(dlen, 0, 500, 0.1, 1), 0.1, 1)) * 12
+			local eyeGap = 30 - offset * 0.5
+			dx, dy = dx / dlen * offset, dy / dlen * offset * 0.5
+			lg.circle('fill', x - eyeGap / 2 + dx, self.y + h * eyeRelationalHeight + dy, eyeR, math.ceil(eyeR * util.tau))
+			lg.circle('fill', x + eyeGap / 2 + dx, self.y + h * eyeRelationalHeight + dy, eyeR, math.ceil(eyeR * util.tau))
+		end
+	end
+	
+	do -- Bomb and trajectory
 		local x, y = self.x + self.w / 2, self.y + self.h / 2
 		local mx, my = util.getCamera():worldCoords(lm.getPosition())
 		local dx, dy = vector.sub(mx, my, x, y)
@@ -59,15 +87,11 @@ function player:draw()
 					end
 				end
 				lg.setColor(r, g, b, 1)
-				-- local r = lg.getLineWidth() / 2
-				-- for i = 0, #points / 2 - 1 do
-				-- 	lg.circle('fill', points[i * 2 + 1], points[i * 2 + 2], r, math.ceil(r * util.tau))
-				-- end
 				lg.setLineJoin(lj)
 			end
 		end
 	end
-	if cli.debug then
+	if cli.debug then -- Debug control gauge
 		local w, h = 100, 8
 		local x, y = self.x + self.w / 2, self.y + self.h + 10
 		lg.rectangle('line', x - w / 2, y, w, h)

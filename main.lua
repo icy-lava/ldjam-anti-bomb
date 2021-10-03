@@ -18,7 +18,7 @@ function love.load()
 	end
 	scene = roomy.new()
 	scene:hook()
-	scene:enter(require 'scene.game':new())
+	scene:enter(require 'scene.menu':new())
 end
 
 function love.update(dt)

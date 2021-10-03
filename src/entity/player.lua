@@ -13,6 +13,7 @@ function player:initialize(x, y)
 	super.initialize(self, x - w / 2, y - h / 2, w, h)
 	self.input = {
 		up = {'up', 'w'},
+		up = {'up', 'w', 'space'},
 		down = {'down', 's'},
 		left = {'left', 'a'},
 		right = {'right', 'd'},

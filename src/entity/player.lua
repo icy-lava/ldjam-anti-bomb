@@ -108,7 +108,7 @@ end
 
 function player:getAimVelocity()
 	local angle, len = self:getAimPolar()
-	return vector.fromPolar(angle, len ^ 0.5 * 50 + 50)
+	return vector.fromPolar(angle, len ^ 0.5 * 40 + 100)
 end
 
 local bomb = require 'entity.bomb'
@@ -165,13 +165,18 @@ function player:throwBombPrepare()
 		util.getTweener():to(self, 0.2, {armPosition = 1.5}):ease('quadinout')
 		self.bombTimer = {value = 0}
 		self.bombTimerTween = util.getTweener():to(self.bombTimer, bomb.TIME_MAX, {value = 1}):ease('linear'):oncomplete(function()
+			if self.throwingTween then
+				self.throwingTween:stop()
+				self.throwingTween = nil
+			end
 			self.sound:stop()
 			self.sound = nil
 			local b = bomb:new(self:getBombPosition())
 			b.time = b.timeMax
+			b.bad = true
 			util.getWorld():addEntity(b)
 			self.bombState = 'missing'
-			util.getTweener():to({}, 0.2, {}):oncomplete(function() -- duplicate code
+			util.getTweener():to({}, 0.5, {}):oncomplete(function() -- duplicate code
 				self.bombTimer = nil
 				self.armPosition = player.DEFAULT_ARM_POSITION
 				self.bombState = 'ready'
@@ -186,18 +191,21 @@ function player:throwBombPrepare()
 end
 
 function player:throwBomb(mx, my)
-	if self.bombTimerTween then
-		self.bombTimerTween:stop()
-		self.bombTimerTween = nil
-	end
 	if self.bombState == 'prepared' then
 		self.bombState = 'throwing'
-		util.getTweener():to(self, 0.1, {armPosition = 0}):ease('quadin'):oncomplete(function()
+		self.throwingTween = util.getTweener():to(self, 0.1, {armPosition = 0}):ease('quadin'):oncomplete(function()
+			if self.bombTimerTween then
+				self.bombTimerTween:stop()
+				self.bombTimerTween = nil
+			end
+			self.throwingTween = nil
+			
 			self.bombState = 'missing'
 			
 			local b = require 'entity.bomb':new(util.getBombOrigin())
 			b.vx, b.vy = self:getAimVelocity()
 			b.time = self:getBombCompletion() * b.timeMax
+			if b.timeMax - b.time < 0.2 then b.bad = true end
 			
 			b.sound = self.sound
 			self.sound = nil
@@ -210,7 +218,8 @@ function player:throwBomb(mx, my)
 			util.getWorld():addEntity(indicator)
 			
 			util.getWorld():addEntity(b)
-		end):after(0.2, {}):oncomplete(function() -- duplicate code
+		end)
+		self.throwingTween:after(0.2, {}):oncomplete(function() -- duplicate code
 			self.bombTimer = nil
 			self.armPosition = player.DEFAULT_ARM_POSITION
 			self.bombState = 'ready'

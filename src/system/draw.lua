@@ -3,6 +3,8 @@ local filter = tiny.requireAll('draw')
 
 local function preProcess(self, dt)
 	self.world.camera:attach()
+	local shake = self.world.camera.shake or 0
+	lg.translate(shake * (love.math.random() * 2 - 1) * 10, shake * (love.math.random() * 2 - 1) * 10)
 end
 
 local function process(self, e, dt)

@@ -6,6 +6,8 @@ local function preProcess(self, dt)
 	lg.setColor(properties.palette.backgroundExplosion)
 	lg.rectangle('fill', 0, 0, lg.getDimensions())
 	self.world.camera:attach()
+	local shake = self.world.camera.shake or 0
+	lg.translate(shake * (love.math.random() * 2 - 1) * 10, shake * (love.math.random() * 2 - 1) * 10)
 end
 
 local function process(self, e, dt)

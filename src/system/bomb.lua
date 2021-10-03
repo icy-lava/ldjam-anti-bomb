@@ -29,9 +29,17 @@ local function process(self, e, dt)
 				if i == w.player then
 					local remap = util.clamp(util.remap(dlen, 50, 300, 0, 1), 0, 1)
 					i.control = math.min(i.control, remap)
+					if e.bad then
+						i.vx, i.vy = i.vx * 0.2, i.vy * 0.2
+					end
 				end
 			end
 		end
+		
+		local cam = util.getCamera()
+		cam.shake = 0.8
+		util.getTweener():to(cam, 0.3, {shake = 0}):ease('quadin')
+		
 		asset.audio.explode:stop()
 		asset.audio.explode:setPitch(2 ^ ((love.math.random() * 2 - 1) * 0.1))
 		asset.audio.explode:play()

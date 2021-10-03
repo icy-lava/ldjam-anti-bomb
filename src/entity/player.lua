@@ -75,30 +75,8 @@ function player:draw()
 			local bx, by = self:getBombPosition()
 			util.drawBomb(bx, by, self:getBombCompletion())
 			if self.bombState == 'prepared' then
-				local points = self:getBombTrajectory()
-				local lj = lg.getLineJoin()
-				lg.setLineJoin('none')
-				lg.setLineStyle 'rough'
-				lg.setLineWidth(4)
-				-- lg.line(points)
-				local r, g, b = lg.getColor()
-				local pointCount = #points / 2
-				
-				if pointCount > 1 then
-					local x1, y1 = points[1], points[2]
-					for i = 1, pointCount - 1 do
-						local x2, y2 = points[i * 2 + 1], points[i * 2 + 2], points[i * 2 + 3], points[i * 2 + 4]
-						lg.setColor(r, g, b, 1 - i / (pointCount - 1))
-						lg.line(x1, y1, x2, y2)
-						x1, y1 = x2, y2
-					end
-				end
-				lg.setColor(r, g, b, 0.2)
-				if pointCount > 0 then
-					lg.circle('line', points[pointCount * 2 - 1], points[pointCount * 2], 20)
-				end
-				lg.setColor(r, g, b, 1)
-				lg.setLineJoin(lj)
+				lg.setColor(properties.palette.outline)
+				util.drawIndicator(self:getBombTrajectory())
 			end
 		end
 	end
@@ -193,9 +171,7 @@ function player:throwBomb(mx, my)
 			b.time = self:getBombCompletion() * b.timeMax
 			
 			local points = self:getBombTrajectory()
-			local plen = #points
-			local ix, iy = points[plen - 1], points[plen]
-			local indicator = require 'entity.indicator':new(ix, iy, 20)
+			local indicator = require 'entity.indicator':new(points)
 			util.getTweener():to(indicator, math.min(1, b.timeMax - b.time), {alpha = 0, r = indicator.r * 0.5}):ease('quadinout'):oncomplete(function()
 				util.getWorld():removeEntity(indicator)
 			end)

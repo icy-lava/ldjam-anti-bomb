@@ -50,6 +50,11 @@ end
 function game:draw()
 	lg.setBackgroundColor(properties.palette.background)
 	self.world:update(lt.getDelta(), function(w, s) return s.draw end)
+	if cli.debug then
+		lg.setColor(0, 0, 0, 1)
+		local adt = lt.getAverageDelta()
+		lg.print(string.format('FPS: %0.1f, DT: %0.1fms', 1 / adt, adt * 1e3), 4, 4)
+	end
 end
 
 function game:mousepressed(mx, my, button)

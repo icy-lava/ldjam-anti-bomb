@@ -79,6 +79,9 @@ function util.drawBomb(x, y, time)
 	local r = vector.len(bomb.WIDTH / 2, bomb.HEIGHT / 2)
 	lg.push()
 	lg.translate(x, y)
+	lg.setColor(properties.palette.bomb)
+	lg.circle('fill', 0, 0, r, r * math.pi * 2)
+	lg.setColor(properties.palette.outline)
 	lg.circle('line', 0, 0, r, r * math.pi * 2)
 	
 	local dashCount = 10
@@ -90,6 +93,32 @@ function util.drawBomb(x, y, time)
 	end
 	lg.pop()
 	lg.setLineWidth(lw)
+end
+
+function util.drawIndicator(points, radius)
+	radius = radius or require 'entity.indicator'.DEFAULT_RADIUS
+	local lj = lg.getLineJoin()
+	lg.setLineJoin('none')
+	lg.setLineStyle('rough')
+	lg.setLineWidth(4)
+	local r, g, b, a = lg.getColor()
+	local pointCount = #points / 2
+	
+	if pointCount > 1 then
+		local x1, y1 = points[1], points[2]
+		for i = 1, pointCount - 1 do
+			local x2, y2 = points[i * 2 + 1], points[i * 2 + 2]
+			lg.setColor(r, g, b, (1 - i / (pointCount - 1)) * a)
+			lg.line(x1, y1, x2, y2)
+			x1, y1 = x2, y2
+		end
+	end
+	lg.setColor(r, g, b, 0.2 * a)
+	if pointCount > 0 then
+		lg.circle('line', points[pointCount * 2 - 1], points[pointCount * 2], radius)
+	end
+	lg.setColor(r, g, b, a)
+	lg.setLineJoin(lj)
 end
 
 function util.addSystem(world, systemName, ...)

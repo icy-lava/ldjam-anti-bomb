@@ -1,16 +1,18 @@
 local lg = require 'love.graphics'
 local indicator = class 'Object'
 
-function indicator:initialize(x, y, r)
-	self.x, self.y, self.r = x, y, r
-	self.alpha = 0.1
+indicator.static.DEFAULT_RADIUS = 20
+
+function indicator:initialize(points, r)
+	self.points = assert(points)
+	self.r = indicator.DEFAULT_RADIUS
+	self.alpha = 1
 end
 
 function indicator:draw()
 	local c = properties.palette.outline
 	lg.setColor(c[1], c[2], c[3], self.alpha)
-	lg.setLineWidth(4)
-	lg.circle('line', self.x, self.y, self.r, self.r * util.tau)
+	util.drawIndicator(self.points, self.r)
 end
 
 return indicator

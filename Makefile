@@ -47,14 +47,20 @@ LOVE_APPIMAGE_32_URL=https://github.com/love2d/love/releases/download/11.3/love-
 SOURCE_FILES=$(wildcard *.lua) $(shell find src lib -type f)
 ASSET_FILES=$(shell find asset -type f)
 
+MAPS = $(wildcard asset/raw/map/*)
+MAPS_EXPORTED = $(patsubst asset/raw/map/%.tmx,asset/map/%.json,$(MAPS))
+
+TILED=tiled
+
 # Check for WSL
 ifeq ($(shell grep -q microsoft /proc/version 2> /dev/null; echo $$?),0)
 WSL=1
 RUN=cmd.exe /c run.cmd
+TILED=$(shell which tiled tiled.exe "/mnt/c/Program Files/Tiled/tiled.exe" | head -n1)
+ifeq ($(TILED),)
+$(error Tiled not found)
 endif
-
-# MAPS = $(wildcard asset/map/*)
-# MAPS_EXPORTED = $(patsubst asset/map/%.tmx,asset/map_export/%.json,$(MAPS))
+endif
 
 .PHONY: run build_all $(BINARY_LOVE_PATH) build_exe build_exe_32 build_appimage clean compile_all tiled_compile recompile
 
@@ -131,11 +137,10 @@ compile_all: tiled_compile
 
 clean:
 	rm -rf $(BUILD_DIRECTORY)
+	rm $(wildcard asset/map/*.json)
 
-# tiled_compile: $(MAPS_EXPORTED)
+tiled_compile: $(MAPS_EXPORTED)
 
-# asset/map_export/%.json: asset/map/%.tmx
-# 	tiled --export-map json "$<" "$@"
-
-# clean:
-# 	$(remove) $(subst /,$(path_sep),$(wildcard asset/map_export/*.json))
+asset/map/%.json: asset/raw/map/%.tmx
+	mkdir -p $(shell dirname "$@")
+	"$(TILED)" --export-map json "$<" "$@"

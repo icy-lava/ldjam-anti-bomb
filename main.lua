@@ -13,6 +13,9 @@ function love.load()
 			end
 		}
 	}
+	if cli.music then
+		asset.audio.music:play()
+	end
 	scene = roomy.new()
 	scene:hook()
 	scene:enter(require 'scene.game':new())

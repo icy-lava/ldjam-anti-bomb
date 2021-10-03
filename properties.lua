@@ -27,9 +27,11 @@ properties = {
 			clock = 0.08,
 			buildup = 0.05,
 			bomb_bounce = 0.2,
+			music = 0.3
 		},
 		looping = {
-			clock = true
+			clock = true,
+			music = true
 		}
 	}
 }

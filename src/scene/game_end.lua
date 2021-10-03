@@ -5,7 +5,7 @@ function state:enter()
 	self.fade = 1
 	self.world = tiny.world()
 	util.addSystem(self.world, 'tween')
-	util.getTweener():to(self, 0.5, {fade = 0}):ease('quadinout')
+	util.getTweener():to(self, 0.2, {}):after(0.8, {fade = 0}):ease('quadinout')
 	lg.setBackgroundColor(properties.palette.background)
 	self.font = asset.font['Montserrat-Regular'](48)
 	self.fontTitle = asset.font['Montserrat-Regular'](96)

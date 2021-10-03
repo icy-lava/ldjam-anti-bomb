@@ -7,9 +7,13 @@ properties = {
 	palette = {
 		background = {vivid.LCHtoRGB(90, 20, 300, 1)},
 		outline = {vivid.LCHtoRGB(12, 50, 60, 1)},
+		wire = {vivid.LCHtoRGB(12, 50, 240, 1)},
 		solid = {vivid.LCHtoRGB(60, 30, 300, 1)},
+		toggled = {vivid.LCHtoRGB(60, 30, 0, 1)},
 		player = {vivid.LCHtoRGB(60, 50, 30, 1)},
 		bomb = {vivid.LCHtoRGB(40, 90, 0, 1)},
+		switch = {vivid.LCHtoRGB(60, 30, 0, 1)},
+		switchOn = {vivid.LCHtoRGB(85, 30, 0, 1)},
 		backgroundExplosion = {vivid.LCHtoRGB(0, 0, 0, 1)},
 		outlineExplosion = {1, 0, 0, 1},
 	},

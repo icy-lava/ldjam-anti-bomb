@@ -3,12 +3,12 @@ local super = bomb.super
 
 bomb.static.WIDTH = 32
 bomb.static.HEIGHT = 32
-bomb.static.TIME_MAX = 2
+bomb.static.TIME_MAX = 2.5
 
 function bomb:initialize(x, y)
 	local w, h = bomb.WIDTH, bomb.HEIGHT
 	super.initialize(self, x - w / 2, y - h / 2, w, h)
-	self:setRestitution(0.8)
+	self:setRestitution(0.9)
 	self.timeMax = bomb.TIME_MAX
 	self.time = 0
 end

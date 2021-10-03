@@ -71,6 +71,11 @@ function util.getBombOrigin(scene)
 	return util.getCenter(util.getPlayer(scene))
 end
 
+function util.isSubclass(class, other)
+	if class == other then return true end
+	other:isSubclassOf(class)
+end
+
 function util.subclassFilter(class)
 	return function(s, e)
 		local c = e.class

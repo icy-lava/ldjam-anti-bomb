@@ -1,7 +1,11 @@
 local lm = require 'love.mouse'
 local lg = require 'love.graphics'
 local function getCameraTargetPosition(self)
-	local x, y = self.world.player:getCenter()
+	local p = self.world.player
+	local x, y = p:getCenter()
+	if p.falling then
+		x, y = p.lastX, p.lastY
+	end
 	local w, h = lg.getDimensions()
 	local mindim = math.min(w, h)
 	local mx, my = lm.getPosition()
@@ -20,8 +24,9 @@ local function update(self, dt)
 	local mindim = math.min(w, h)
 	local mx, my = lm.getPosition()
 	mx, my = mx - w / 2, my - h / 2
-	local zoomFactor = util.clamp(vector.len(mx, my) / (mindim / 2), 0, 1)
-	zoomFactor = util.remap(zoomFactor, 0, 1, 1.1, 0.9)
+	local p = self.world.player
+	local zoomFactor = util.clamp(vector.len(mx, my) / (mindim / 2), 0, 1) + vector.len(p.vx, p.vy) ^ 0.5 / 20
+	zoomFactor = util.remap(zoomFactor, 0, 1, 1.0, 0.8)
 	camera.zoomFactor = util.damp(camera.zoomFactor or 1, zoomFactor, 0.5, dt)
 	camera.scale = mindim / properties.window.referenceDimension * camera.zoomFactor
 end

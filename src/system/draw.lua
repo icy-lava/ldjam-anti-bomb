@@ -16,14 +16,19 @@ local function postProcess(self, dt)
 	self.world.camera:detach()
 end
 
+local function compare(self, a, b)
+	if a.class == require 'entity.wire' then return false end
+end
+
 return function()
-	local system = tiny.processingSystem()
+	local system = tiny.sortedProcessingSystem()
 	
 	system.draw = true
 	system.filter = filter
 	system.preProcess = preProcess
 	system.process = process
 	system.postProcess = postProcess
+	system.compare = compare
 	
 	return system
 end

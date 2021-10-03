@@ -1,21 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="32" tileheight="32" infinite="1" nextlayerid="3" nextobjectid="33">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="64" tileheight="64" infinite="1" nextlayerid="3" nextobjectid="191">
  <objectgroup id="2" name="Objects">
-  <object id="7" x="-64" y="0" width="1024" height="64"/>
-  <object id="22" x="896" y="-64" width="544" height="64"/>
-  <object id="30" x="2144" y="-64" width="544" height="64"/>
-  <object id="27" x="1376" y="0" width="832" height="64"/>
-  <object id="28" x="1632" y="-96" width="64" height="96"/>
-  <object id="29" x="1888" y="-96" width="64" height="96"/>
-  <object id="10" x="-128" y="-480" width="64" height="480"/>
-  <object id="11" x="-128" y="-544" width="64" height="64"/>
-  <object id="24" x="-128" y="0" width="64" height="64"/>
-  <object id="21" x="-64" y="-544" width="480" height="64"/>
-  <object id="23" x="352" y="-608" width="192" height="64"/>
-  <object id="25" x="480" y="-672" width="192" height="64"/>
-  <object id="26" x="608" y="-736" width="832" height="64"/>
-  <object id="31" x="1376" y="-800" width="832" height="64"/>
-  <object id="32" x="2144" y="-736" width="544" height="64"/>
-  <object id="9" name="player" x="224" y="-128" width="64" height="96"/>
+  <object id="9" name="player" x="192" y="-128" width="64" height="96"/>
+  <object id="63" x="-128" y="0" width="704" height="128"/>
+  <object id="64" x="-128" y="-512" width="128" height="512"/>
+  <object id="65" x="0" y="-512" width="576" height="128"/>
+  <object id="68" x="576" y="-64" width="192" height="192"/>
+  <object id="69" x="448" y="-640" width="256" height="128"/>
+  <object id="70" x="768" y="-128" width="192" height="256"/>
+  <object id="71" x="960" y="-192" width="192" height="320"/>
+  <object id="72" x="1152" y="-192" width="576" height="320"/>
+  <object id="73" x="576" y="-1408" width="128" height="768"/>
+  <object id="74" x="576" y="-1536" width="1152" height="128"/>
+  <object id="75" x="1728" y="-448" width="512" height="576"/>
+  <object id="76" x="2240" y="-704" width="512" height="832"/>
+  <object id="79" x="2752" y="-832" width="1024" height="960"/>
+  <object id="80" x="1728" y="-1536" width="1280" height="128"/>
+  <object id="81" x="3648" y="-2048" width="128" height="1216"/>
+  <object id="82" x="3392" y="-1216" width="256" height="128"/>
+  <object id="83" x="2944" y="-1408" width="128" height="128"/>
+  <object id="84" x="2880" y="-2176" width="896" height="128"/>
+  <object id="85" x="2304" y="-1920" width="192" height="384"/>
+  <object id="86" x="1728" y="-2880" width="192" height="1344"/>
+  <object id="87" x="1920" y="-2880" width="1856" height="128"/>
+  <object id="88" x="2624" y="-768" width="128" height="64"/>
+  <object id="89" x="3776" y="-2880" width="704" height="128"/>
+  <object id="90" x="4480" y="-2880" width="128" height="704"/>
+  <object id="91" name="toggled" x="3776" y="-2176" width="704" height="128"/>
+  <object id="92" name="switch" x="4224" y="-2496" width="64" height="64"/>
+  <object id="93" x="4288" y="-2464">
+   <polyline points="0,0 160,0 160,288"/>
+  </object>
+  <object id="94" x="4480" y="-2176" width="128" height="128"/>
+  <object id="95" x="3776" y="0" width="704" height="128"/>
+  <object id="96" x="4480" y="-2048" width="128" height="1536"/>
+  <object id="97" x="5312" y="-512" width="256" height="128"/>
+  <object id="99" x="4480" y="-512" width="256" height="128"/>
+  <object id="101" name="toggled" x="5440" y="-384" width="128" height="384"/>
+  <object id="102" x="4608" y="0" width="960" height="128"/>
+  <object id="103" name="switch" x="4480" y="0" width="128" height="128"/>
+  <object id="105" name="toggled" x="4736" y="-512" width="576" height="128"/>
+  <object id="106" name="toggled" x="5440" y="-960" width="128" height="448"/>
+  <object id="107" x="5056" y="-1088" width="384" height="128"/>
+  <object id="108" x="4608" y="-1088" width="384" height="128"/>
+  <object id="109" x="4992" y="-1088" width="64" height="64"/>
+  <object id="110" name="switch" x="4992" y="-1024" width="64" height="64"/>
+  <object id="111" x="5056" y="-1152">
+   <polyline points="0,192 64,256 256,256 320,320 320,704 384,768"/>
+  </object>
+  <object id="112" x="4544" y="0">
+   <polyline points="0,0 0,-384 64,-448 192,-448"/>
+  </object>
+  <object id="113" x="5568" y="-512" width="704" height="128"/>
+  <object id="114" x="5568" y="0" width="704" height="128"/>
+  <object id="115" x="6144" y="-384" width="128" height="160"/>
+  <object id="116" x="6144" y="-160" width="128" height="160"/>
+  <object id="118" name="switch" x="6528" y="-256" width="128" height="128"/>
+  <object id="121" x="6592" y="-512" width="128" height="256"/>
+  <object id="122" x="6592" y="-128" width="128" height="256"/>
+  <object id="123" x="6272" y="0" width="320" height="128"/>
+  <object id="126" x="6720" y="-384" width="64" height="384"/>
+  <object id="127" x="6272" y="-512" width="320" height="128"/>
+  <object id="128" x="5440" y="-1088" width="128" height="128"/>
+  <object id="129" x="6464" y="-256">
+   <polyline points="64,0 0,-64 0,-128 -64,-192 -832,-192 -896,-256"/>
+  </object>
+  <object id="132" x="5568" y="-1088" width="512" height="128"/>
+  <object id="133" name="checkpoint" x="5952" y="-960" width="128" height="448"/>
+  <object id="134" name="fallzone" x="6784" y="-256" width="1024" height="192"/>
+  <object id="174" name="fallzone" x="-512" y="-2624" width="2240" height="192"/>
+  <object id="183" name="fallzone" x="-1920" y="-2432" width="1536" height="192"/>
+  <object id="184" name="fallzone" x="-1920" y="-2624" width="192" height="192"/>
+  <object id="181" name="fallzone" x="-2752" y="-5120" width="16576" height="192"/>
+  <object id="136" x="7104" y="-640" width="384" height="128"/>
+  <object id="137" x="7808" y="-384" width="64" height="384"/>
+  <object id="138" x="7872" y="-512" width="128" height="256"/>
+  <object id="139" x="7872" y="-128" width="128" height="256"/>
+  <object id="140" x="8000" y="-512" width="448" height="128"/>
+  <object id="141" name="checkpoint" x="8064" y="-1920" width="128" height="1408"/>
+  <object id="142" x="8768" y="-768" width="128" height="128"/>
+  <object id="143" name="switch" x="8960" y="-1408" width="64" height="64"/>
+  <object id="144" name="toggled-off" x="9344" y="-896" width="640" height="128"/>
+  <object id="145" x="9024" y="-1344">
+   <polyline points="0,0 64,64 64,384 128,448 320,448"/>
+  </object>
+  <object id="146" x="10176" y="-1152" width="128" height="384"/>
+  <object id="150" x="10816" y="-1280" width="128" height="384"/>
+  <object id="169" x="10432" y="-1664" width="128" height="128"/>
+  <object id="170" x="10560" y="-2176" width="128" height="128"/>
+  <object id="171" x="10432" y="-2624" width="128" height="128"/>
+  <object id="154" x="10176" y="-2048" width="128" height="384"/>
+  <object id="155" x="10816" y="-2560" width="128" height="384"/>
+  <object id="156" x="10176" y="-3008" width="128" height="384"/>
+  <object id="147" name="fallzone" x="8448" y="-384" width="1024" height="192"/>
+  <object id="168" name="fallzone" x="4608" y="-2816" width="4800" height="64"/>
+  <object id="148" name="fallzone" x="9472" y="-640" width="960" height="448"/>
+  <object id="149" name="fallzone" x="10432" y="-1024" width="1728" height="448"/>
+  <object id="164" name="fallzone" x="12160" y="-4928" width="1728" height="4352"/>
+  <object id="151" name="checkpoint" x="10176" y="-2304" width="128" height="1152"/>
+  <object id="157" name="checkpoint" x="10176" y="-4928" width="128" height="1920"/>
+  <object id="178" name="checkpoint" x="4352" y="-4928" width="128" height="2048"/>
+  <object id="179" name="checkpoint" x="1856" y="-4928" width="128" height="2048"/>
+  <object id="180" name="checkpoint" x="-832" y="-4928" width="128" height="2048"/>
+  <object id="185" name="checkpoint" x="-1664" y="-4928" width="128" height="2176"/>
+  <object id="158" x="9344" y="-3008" width="448" height="128"/>
+  <object id="160" x="8768" y="-3008" width="448" height="128"/>
+  <object id="161" x="8192" y="-3008" width="448" height="128"/>
+  <object id="162" x="7616" y="-3008" width="448" height="128"/>
+  <object id="163" x="6912" y="-3392" width="448" height="128"/>
+  <object id="165" x="6208" y="-3008" width="448" height="128"/>
+  <object id="166" x="5504" y="-3392" width="448" height="128"/>
+  <object id="167" x="4800" y="-3008" width="448" height="128"/>
+  <object id="173" x="576" y="-2880" width="576" height="128"/>
+  <object id="175" x="-192" y="-2944" width="576" height="128"/>
+  <object id="176" x="-960" y="-2880" width="576" height="128"/>
+  <object id="182" x="-2432" y="-2752" width="1088" height="128"/>
+  <object id="177" x="-1472" y="-4928" width="256" height="1984"/>
+  <object id="186" x="-2624" y="-3200" width="192" height="576"/>
+  <object id="187" x="-2432" y="-3200" width="192" height="128"/>
+  <object id="188" x="-6080" y="-3200" width="3456" height="128"/>
+  <object id="189" name="end" x="-3584" y="-4352" width="128" height="1152"/>
  </objectgroup>
 </map>

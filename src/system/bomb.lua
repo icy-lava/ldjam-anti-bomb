@@ -10,7 +10,7 @@ local function process(self, e, dt)
 		if e.sound then e.sound:stop() end
 		
 		local bx, by = e:getCenter()
-		local exp = require 'entity.explosion':new(bx, by, 350)
+		local exp = require 'entity.explosion':new(bx, by, e.bad and 250 or 350)
 		w:addEntity(exp)
 		util.getTweener():to(exp, 0.09 * 1, {}):oncomplete(function()
 			w:removeEntity(exp)
@@ -18,12 +18,12 @@ local function process(self, e, dt)
 		local items, len = w.bump:getItems()
 		for j = 1, len do
 			local i = items[j]
+			local ix, iy = i:getCenter()
 			if i.class and i.class:isSubclassOf(dynamic) then
-				local ix, iy = i:getCenter()
 				local dx, dy = vector.sub(ix, iy, bx, by)
 				local dlen2 = vector.len2(dx, dy)
 				local dlen = math.sqrt(dlen2)
-				local force = 8e2 / (1 + dlen2 / 30000)
+				local force = 9e2 / (1 + dlen2 / 25000)
 				local dvx, dvy = dx / dlen * force, dy / dlen * force
 				i.vx, i.vy = i.vx + dvx, i.vy + dvy
 				if i == w.player then
@@ -33,6 +33,9 @@ local function process(self, e, dt)
 						i.vx, i.vy = i.vx * 0.2, i.vy * 0.2
 					end
 				end
+			end
+			if not e.bad and i.trigger and vector.dist(bx, by, ix, iy) < 350 then
+				i:trigger()
 			end
 		end
 		

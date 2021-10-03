@@ -1,3 +1,5 @@
+local lm = require 'love.mouse'
+local lg = require 'love.graphics'
 local player = require 'entity.dynamic' :subclass 'Player'
 local super = player.super
 
@@ -23,19 +25,17 @@ function player:initialize(x, y)
 	self.bombState = 'ready'
 end
 
-local lm = require 'love.mouse'
-local lg = require 'love.graphics'
-function player:draw()
-	-- super.draw(self)
-	lg.setColor(properties.palette.outline)
-	
+local function drawPlayer(self, fill)
+	lg.setLineWidth(4)
 	do -- Body
 		local w, h = player.WIDTH - 16, player.HEIGHT - 50
 		local x, y = self:getCenter()
-		lg.setColor(properties.palette.player)
-		lg.rectangle('fill', x - w / 2, self.y + player.HEIGHT - h, w, h, 2)
-		lg.setLineWidth(4)
-		lg.setColor(properties.palette.outline)
+		if fill then
+			local r, g, b, a = lg.getColor()
+			lg.setColor(properties.palette.player)
+			lg.rectangle('fill', x - w / 2, self.y + player.HEIGHT - h, w, h, 2)
+			lg.setColor(r, g, b, a)
+		end
 		lg.rectangle('line', x - w / 2, self.y + player.HEIGHT - h, w, h, 2)
 	end
 	
@@ -43,10 +43,12 @@ function player:draw()
 	do -- Head
 		local w, h = player.WIDTH, 44
 		local x, y = self:getCenter()
-		lg.setColor(properties.palette.player)
-		lg.rectangle('fill', x - w / 2, self.y, w, h, 2)
-		lg.setLineWidth(4)
-		lg.setColor(properties.palette.outline)
+		if fill then
+			local r, g, b, a = lg.getColor()
+			lg.setColor(properties.palette.player)
+			lg.rectangle('fill', x - w / 2, self.y, w, h, 2)
+			lg.setColor(r, g, b, a)
+		end
 		lg.rectangle('line', x - w / 2, self.y, w, h, 2)
 		do -- Eyes
 			local eyeRelationalHeight = 0.3
@@ -61,23 +63,17 @@ function player:draw()
 			lg.circle('fill', x + eyeGap / 2 + dx, self.y + h * eyeRelationalHeight + dy, eyeR, math.ceil(eyeR * util.tau))
 		end
 	end
-	
-	do -- Bomb and trajectory
-		local x, y = self.x + self.w / 2, self.y + self.h / 2
-		local mx, my = util.getCamera():worldCoords(lm.getPosition())
-		local dx, dy = vector.sub(mx, my, x, y)
-		local dlen = vector.len(dx, dy)
-		local ta = self.throwAnimation
-		local offset = 32 * self.armPosition
-		local r = 20
-		-- lg.circle('line', x - dx / dlen * offset, y - dy / dlen * offset * 0.75, r, r * math.pi * 2)
-		if self.bombState ~= 'missing' then
-			local bx, by = self:getBombPosition()
-			util.drawBomb(bx, by, self:getBombCompletion())
-			if self.bombState == 'prepared' then
-				lg.setColor(properties.palette.outline)
-				util.drawIndicator(self:getBombTrajectory())
-			end
+end
+
+function player:draw()
+	lg.setColor(properties.palette.outline)
+	drawPlayer(self, true)
+	if self.bombState ~= 'missing' then -- Bomb and trajectory
+		local bx, by = self:getBombPosition()
+		util.drawBomb(bx, by, self:getBombCompletion(), true)
+		if self.bombState == 'prepared' then
+			lg.setColor(properties.palette.outline)
+			util.drawIndicator(self:getBombTrajectory())
 		end
 	end
 	if cli.debug then -- Debug control gauge
@@ -85,6 +81,20 @@ function player:draw()
 		local x, y = self.x + self.w / 2, self.y + self.h + 10
 		lg.rectangle('line', x - w / 2, y, w, h)
 		lg.rectangle('fill', x - w / 2, y, w * self.control, h)
+	end
+end
+
+function player:drawExploded()
+	local c = properties.palette.outlineExplosion
+	lg.setColor(c[1], c[2], c[3], 1)
+	drawPlayer(self, false)
+	if self.bombState ~= 'missing' then -- Bomb and trajectory
+		local bx, by = self:getBombPosition()
+		util.drawBomb(bx, by, self:getBombCompletion(), false)
+		if self.bombState == 'prepared' then
+			lg.setColor(properties.palette.outlineExplosion)
+			util.drawIndicator(self:getBombTrajectory())
+		end
 	end
 end
 

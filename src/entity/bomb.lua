@@ -13,20 +13,20 @@ function bomb:initialize(x, y)
 	self.time = 0
 end
 
-local function draw(self)
+local function draw(self, fill)
 	local x, y = self:getCenter()
-	util.drawBomb(x, y, self.time / self.timeMax)
+	util.drawBomb(x, y, self.time / self.timeMax, fill)
 end
 
 local lg = require 'love.graphics'
 function bomb:draw()
 	lg.setColor(properties.palette.outline)
-	draw(self)
+	draw(self, true)
 end
 
 function bomb:drawExploded()
 	lg.setColor(properties.palette.outlineExplosion)
-	draw(self)
+	draw(self, false)
 end
 
 return bomb

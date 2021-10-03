@@ -15,4 +15,10 @@ function indicator:draw()
 	util.drawIndicator(self.points, self.r)
 end
 
+function indicator:drawExploded()
+	local c = properties.palette.outlineExplosion
+	lg.setColor(c[1], c[2], c[3], self.alpha)
+	util.drawIndicator(self.points, self.r)
+end
+
 return indicator

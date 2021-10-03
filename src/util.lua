@@ -80,20 +80,22 @@ end
 
 local lg = require 'love.graphics'
 local bomb = require 'entity.bomb'
-function util.drawBomb(x, y, time)
+function util.drawBomb(x, y, time, fill)
 	local lw = lg.getLineWidth()
 	lg.setLineWidth(4)
 	
 	local r = vector.len(bomb.WIDTH / 2, bomb.HEIGHT / 2)
 	lg.push()
 	lg.translate(x, y)
-	lg.setColor(properties.palette.bomb)
-	lg.circle('fill', 0, 0, r, r * math.pi * 2)
-	lg.setColor(properties.palette.outline)
+	if fill then
+		local c = {lg.getColor()}
+		lg.setColor(properties.palette.bomb)
+		lg.circle('fill', 0, 0, r, r * math.pi * 2)
+		lg.setColor(c)
+	end
 	lg.circle('line', 0, 0, r, r * math.pi * 2)
 	
 	local dashCount = 10
-	lg.setLineWidth(4)
 	for i = 0, math.ceil(dashCount * (1 - time)) - 1 do
 		local angle = i / dashCount * util.tau - math.pi / 2
 		local nx, ny = math.cos(angle), math.sin(angle)

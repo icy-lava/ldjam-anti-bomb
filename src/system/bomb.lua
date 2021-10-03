@@ -12,7 +12,7 @@ local function process(self, e, dt)
 		local bx, by = e:getCenter()
 		local exp = require 'entity.explosion':new(bx, by, 350)
 		w:addEntity(exp)
-		util.getTweener():to(exp, 0.09, {}):oncomplete(function()
+		util.getTweener():to(exp, 0.09 * 1, {}):oncomplete(function()
 			w:removeEntity(exp)
 		end):ease('quartout')
 		local items, len = w.bump:getItems()
@@ -32,8 +32,8 @@ local function process(self, e, dt)
 				end
 			end
 		end
-		asset.audio.explode:setPitch(2 ^ ((love.math.random() * 2 - 1) * 0.1))
 		asset.audio.explode:stop()
+		asset.audio.explode:setPitch(2 ^ ((love.math.random() * 2 - 1) * 0.1))
 		asset.audio.explode:play()
 		asset.audio.feedback:stop()
 		asset.audio.feedback:play()

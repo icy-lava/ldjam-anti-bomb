@@ -14,11 +14,12 @@ local function process(self, e, dt)
 		e.vx = util.damp(e.vx, 0, util.lerp(e.control ^ 2, 0.99, e.onGround and 0.001 or 0.5), dt)
 	else
 		if lume.sign(ix) ~= lume.sign(e.vx) or math.abs(ix) > math.abs(e.vx) then
-			e.vx = util.damp(e.vx, ix, util.lerp(e.control ^ 2, 0.99, e.onGround and 0.0005 or 0.01), dt)
+			e.vx = util.damp(e.vx, ix, util.lerp(e.control ^ 2, 0.99, e.onGround and 0.001 or 0.01), dt)
 		end
 	end
 	if e.onGround and iy < 0 then
 		e.vy = -500
+		-- e.vx = util.lerp(0.5, e.vx * 1.05, e.vx + util.sign(e.vx) * 100)
 	end
 	-- e.vx, e.vy = util.damp(e.vx, ix, 0.001, dt), util.damp(e.vy, iy, 0.001, dt)
 end

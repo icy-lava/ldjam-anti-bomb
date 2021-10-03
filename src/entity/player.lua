@@ -15,7 +15,7 @@ function player:initialize(x, y)
 		left = {'left', 'a'},
 		right = {'right', 'd'},
 	}
-	self.speedMax = 400
+	self.speedMax = 500
 	self.onGround = false
 	self.control = 1
 	self.restitution = 0.8
@@ -32,14 +32,21 @@ function player:draw()
 	do -- Body
 		local w, h = player.WIDTH - 16, player.HEIGHT - 50
 		local x, y = self:getCenter()
+		lg.setColor(properties.palette.player)
+		lg.rectangle('fill', x - w / 2, self.y + player.HEIGHT - h, w, h, 2)
 		lg.setLineWidth(4)
+		lg.setColor(properties.palette.outline)
 		lg.rectangle('line', x - w / 2, self.y + player.HEIGHT - h, w, h, 2)
 	end
+	
 	
 	do -- Head
 		local w, h = player.WIDTH, 44
 		local x, y = self:getCenter()
+		lg.setColor(properties.palette.player)
+		lg.rectangle('fill', x - w / 2, self.y, w, h, 2)
 		lg.setLineWidth(4)
+		lg.setColor(properties.palette.outline)
 		lg.rectangle('line', x - w / 2, self.y, w, h, 2)
 		do -- Eyes
 			local eyeRelationalHeight = 0.3
@@ -85,6 +92,10 @@ function player:draw()
 						lg.line(x1, y1, x2, y2)
 						x1, y1 = x2, y2
 					end
+				end
+				lg.setColor(r, g, b, 0.2)
+				if pointCount > 0 then
+					lg.circle('line', points[pointCount * 2 - 1], points[pointCount * 2], 20)
 				end
 				lg.setColor(r, g, b, 1)
 				lg.setLineJoin(lj)
@@ -180,6 +191,15 @@ function player:throwBomb(mx, my)
 			local b = require 'entity.bomb':new(util.getBombOrigin())
 			b.vx, b.vy = self:getAimVelocity()
 			b.time = self:getBombCompletion() * b.timeMax
+			
+			local points = self:getBombTrajectory()
+			local plen = #points
+			local ix, iy = points[plen - 1], points[plen]
+			local indicator = require 'entity.indicator':new(ix, iy, 20)
+			util.getTweener():to(indicator, math.min(1, b.timeMax - b.time), {alpha = 0, r = indicator.r * 0.5}):ease('quadinout'):oncomplete(function()
+				util.getWorld():removeEntity(indicator)
+			end)
+			util.getWorld():addEntity(indicator)
 			
 			util.getWorld():addEntity(b)
 		end):after(0.2, {}):oncomplete(function() -- duplicate code

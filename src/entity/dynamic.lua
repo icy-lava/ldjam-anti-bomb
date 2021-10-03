@@ -8,6 +8,7 @@ function dynamic:initialize(...)
 	super.initialize(self, ...)
 	self.gx, self.gy = dynamic.GRAVITY_X, dynamic.GRAVITY_Y
 	self.restitution = 0
+	self.damping = 0.05
 end
 
 function dynamic:setRestitution(r)

@@ -10,6 +10,10 @@ end
 
 local function process(self, e, dt)
 	local bump = self.world.bump
+	if e.damping then
+		e.vx = util.damp(e.vx, 0, 1 - e.damping, dt)
+		e.vy = util.damp(e.vy, 0, 1 - e.damping, dt)
+	end
 	local expectX, expectY = e.x + e.vx * dt, e.y + e.vy * dt
 	local bouncy = e.getRestitution and e:getRestitution() > 0
 	local actualX, actualY, cols, len = bump:move(e, expectX, expectY, bouncy and bounceFilter or normalFilter)

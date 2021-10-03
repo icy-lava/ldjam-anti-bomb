@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="32" tileheight="32" infinite="1" nextlayerid="3" nextobjectid="11">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="32" tileheight="32" infinite="1" nextlayerid="3" nextobjectid="33">
  <objectgroup id="2" name="Objects">
-  <object id="7" x="-64" y="0" width="544" height="64"/>
-  <object id="10" x="-128" y="-512" width="64" height="576"/>
-  <object id="9" name="player" x="160" y="-128" width="64" height="96"/>
+  <object id="7" x="-64" y="0" width="1024" height="64"/>
+  <object id="22" x="896" y="-64" width="544" height="64"/>
+  <object id="30" x="2144" y="-64" width="544" height="64"/>
+  <object id="27" x="1376" y="0" width="832" height="64"/>
+  <object id="28" x="1632" y="-96" width="64" height="96"/>
+  <object id="29" x="1888" y="-96" width="64" height="96"/>
+  <object id="10" x="-128" y="-480" width="64" height="480"/>
+  <object id="11" x="-128" y="-544" width="64" height="64"/>
+  <object id="24" x="-128" y="0" width="64" height="64"/>
+  <object id="21" x="-64" y="-544" width="480" height="64"/>
+  <object id="23" x="352" y="-608" width="192" height="64"/>
+  <object id="25" x="480" y="-672" width="192" height="64"/>
+  <object id="26" x="608" y="-736" width="832" height="64"/>
+  <object id="31" x="1376" y="-800" width="832" height="64"/>
+  <object id="32" x="2144" y="-736" width="544" height="64"/>
+  <object id="9" name="player" x="224" y="-128" width="64" height="96"/>
  </objectgroup>
 </map>

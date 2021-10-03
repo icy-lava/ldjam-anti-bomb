@@ -8,13 +8,22 @@ function game:enter()
 	local world = self.world
 	world.bump = bump.newWorld()
 	
-	world.player = require 'entity.player' (-100, 0)
-	world:add(world.player)
-	world:add(require 'entity.block' (-256, 128, 512, 32))
-	world:add(require 'entity.block' (256, -128, 32, 256 + 32))
-	-- world:add(require 'entity.bomb' (0, 0))
-	world.camera = camera.new(0, 20)
-	-- world.camera.scale = 1.0
+	world.level = json.decode(love.filesystem.read('asset/map/level1.json'))
+	
+	for _, obj in ipairs(world.level.layers[1].objects) do
+		local x, y, w, h = obj.x, obj.y, obj.width, obj.height
+		local cx, cy = obj.x + obj.width / 2, obj.y + obj.height / 2
+		local name = obj.name:lower()
+		if name == 'player' then
+			assert(not world.player, 'player added twice in level')
+			world.player = require 'entity.player' (cx, cy)
+			world:add(world.player)
+		else
+			world:add(require 'entity.block' (x, y, w, h))
+		end
+	end
+	
+	world.camera = camera.new(world.player:getCenter())
 	
 	util.addSystem(world, 'bump')
 	util.addSystem(world, 'tween')

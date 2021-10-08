@@ -48,9 +48,9 @@ Alternatively, you can use the GNU Make build system. The requirements for this 
 
 ## Make
 The make system can build 64 and 32 bit Windows executables and Linux AppImages. It downloads the required Love2D binaries automatically. It also downloads `appimagetool` for building AppImages.
-* `make build_all` - build all executables
-* `make build_exe` - build windows 64-bit executable
-* `make build_appimage` - build linux 64-bit .AppImage
+* `make all` - build all executables
+* `make build_win64` - build windows 64-bit zip
+* `make build_lin64` - build linux 64-bit .AppImage
 * `make clean` - delete build directory and exported map files
 * `make run` - export updated Tiled maps and execute the `run` script (or `run.cmd` on WSL)
-* `make tiled_compile` - export updated Tiled maps
+* `make build_maps` - export updated Tiled maps

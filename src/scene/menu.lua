@@ -1,5 +1,5 @@
 local lg = require 'love.graphics'
-local state = class('EndState')
+local state = class('MenuState')
 
 function state:enter()
 	self.fade = 1

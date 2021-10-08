@@ -149,4 +149,10 @@ function util.playSound(sound)
 	sound:play()
 end
 
+local timerFormat = '%02d:%05.2f'
+function util.getTimerString(time)
+	time = time or (love.timer.getTime() - startTime)
+	return timerFormat:format(math.floor(time / 60), time % 60)
+end
+
 return util

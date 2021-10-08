@@ -9,6 +9,8 @@ function state:enter()
 	lg.setBackgroundColor(properties.palette.background)
 	self.font = asset.font['Montserrat-Regular'](48)
 	self.fontTitle = asset.font['Montserrat-Regular'](96)
+	self.fontTimer = asset.font['Montserrat-Regular'](32)
+	self.finalTime = love.timer.getTime() - startTime
 end
 
 function state:update(dt)
@@ -38,6 +40,14 @@ function state:draw()
 	
 	lg.setFont(self.font)
 	lg.print(textSub, math.floor((ww - tsw) / 2), math.floor(y))
+	
+	do
+		local y = wh - self.fontTimer:getHeight() - 32
+		local text = 'Your time: ' .. util.getTimerString(self.finalTime)
+		local f = self.fontTimer
+		lg.setFont(f)
+		lg.print(text, math.floor((ww - f:getWidth(text)) / 2), math.floor(y))
+	end
 	
 	lg.setColor(0, 0, 0, self.fade)
 	lg.rectangle('fill', 0, 0, ww, wh)

@@ -54,4 +54,8 @@ function state:draw()
 	lg.setFont(f)
 end
 
+function state:leave()
+	startTime = require 'love.timer'.getTime()
+end
+
 return state

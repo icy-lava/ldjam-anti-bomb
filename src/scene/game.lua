@@ -108,6 +108,7 @@ function game:enter(prev)
 	lg.setBackgroundColor(properties.palette.background)
 	asset.audio()
 	util.getTweener(self):to(self, 0.5, {fade = 0}):ease('quadinout')
+	self.font = asset.font['Montserrat-Regular'](24)
 end
 
 function game:update(dt)
@@ -124,6 +125,16 @@ function game:draw()
 	lg.setBackgroundColor(properties.palette.background)
 	self.world:update(lt.getDelta(), function(w, s) return s.draw end)
 	local w, h = lg.getDimensions()
+	lg.setColor(properties.palette.outline)
+	do -- Speedrun timer
+		local pf = lg.getFont()
+		local f = self.font
+		lg.setFont(f)
+		local tw = f:getWidth(util.getTimerString(0))
+		local pad = 4
+		lg.print(util.getTimerString(lt.getTime() - startTime), w - tw - pad, pad)
+		lg.setFont(pf)
+	end
 	lg.setColor(0, 0, 0, self.fade)
 	lg.rectangle('fill', 0, 0, w, h)
 	if cli.debug then

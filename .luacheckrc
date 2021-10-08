@@ -8,6 +8,7 @@ globals = {
 	'log',
 	'asset',
 	'scene',
+	'startTime',
 }
 
 require 'path'
